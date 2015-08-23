@@ -1,6 +1,20 @@
+h1, h2, h3 {
+  text-align: center;
+}
+
+body {
+  font-family: Helvetica, sans-serif;
+}
+
+body.ng-cloak {
+  display: none;
+}
+
 div.row {
-  float: left;
+  margin: 0 auto;
+  width: 252px;
   clear: both;
+  overflow: hidden;
 }
 
 div.cell {
@@ -12,6 +26,15 @@ div.cell {
   text-align: center;
   line-height: 80px;
   cursor: pointer;
+  transition: 0.35s ease background-color;
+}
+
+div.cell:hover {
+  background-color: #DEDEDE;
+}
+
+div.cell.winner-true {
+  background-color: gold !important;
 }
 
 div.marker {
@@ -50,15 +73,39 @@ div.marker.ng-leave.ng-leave-active {
   transform: scale(4, 4);
 }
 
-div.cell:hover {
-  background-color: #DEDEDE;
+div.info {
+  margin: 0 auto;
+  width: 252px;
 }
 
 h3 {
   clear: both;
+  margin: 0 0 5px;
+}
+
+div.reset-buttons {
+  width: 220px;
+  margin: 10px auto;
+  overflow: hidden;
 }
 
 button {
   display: block;
-  clear: both;
+  float: left;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-size: 18px;
+  border: 0;
+  width: 100px;
+  height: 60px;
+  background-color: cornflowerblue;
+  color: white;
+}
+
+button:hover {
+  background-color: darkslateblue;
+}
+
+button.ai-first {
+  float: right;
 }
