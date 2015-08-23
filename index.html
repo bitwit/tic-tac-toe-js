@@ -1,0 +1,27 @@
+<!doctype html>
+<html ng-app="TicTacToe">
+    <head>
+        <meta charset="utf-8">
+        <title>Tic Tac Toe</title>
+        <link rel="stylesheet" href="app/main.css">
+        <script src="./bower_components/angular/angular.min.js"></script>
+        <script src="./bower_components/angular-animate/angular-animate.min.js"></script>
+    </head>
+    <body ng-controller="GameCtrl">
+      <div class="row" ng-repeat="row in game.state.grid">
+        <div class="cell" ng-repeat="cell in row track by $index" ng-click="addMarker($parent.$index, $index)">
+          <div class="marker" ng-if="cell !== null">
+            <span class="value-{{cell}}">{{cell ? 'X' : 'O'}}</span>
+          </div>
+        </div>
+      </div>
+
+      <h3>Player Turn: {{game.state.playerTurn ? 'X' : 'O'}}</h3>
+
+      <button ng-click="resetGame()">Reset</button>
+
+      <script src="./app/Game.js"></script>
+      <script src="./app/main.js"></script>
+    </body>
+</html>
+

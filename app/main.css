@@ -1,0 +1,64 @@
+div.row {
+  float: left;
+  clear: both;
+}
+
+div.cell {
+  float: left;
+  background-color: #EFEFEF;
+  border: 2px solid black;
+  width: 80px;
+  height: 80px;
+  text-align: center;
+  line-height: 80px;
+  cursor: pointer;
+}
+
+div.marker {
+  font-size: 36px;
+}
+
+span.value-0 {
+  color: blue;
+}
+
+span.value-1 {
+  color: red;
+}
+
+div.marker.ng-enter, div.marker.ng-leave {
+  transition: 0.35s cubic-bezier(0.680, -0.550, 0.265, 1.550) all;
+}
+
+div.marker.ng-enter {
+  opacity: 0;
+  transform: scale(4, 4);
+}
+
+div.marker.ng-enter.ng-enter-active {
+  opacity: 1;
+  transform: scale(1, 1);
+}
+
+div.marker.ng-leave {
+  opacity: 1;
+  transform: scale(1, 1);
+}
+
+div.marker.ng-leave.ng-leave-active {
+  opacity: 0;
+  transform: scale(4, 4);
+}
+
+div.cell:hover {
+  background-color: #DEDEDE;
+}
+
+h3 {
+  clear: both;
+}
+
+button {
+  display: block;
+  clear: both;
+}
