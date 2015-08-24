@@ -1,7 +1,7 @@
 # Tic Tac Toe JS
 
 An implementation of tic tac toe in Javascript with AI.
-Play here: https://github.com/bitwit/tic-tac-toe-js
+Play here: http://bitwit.github.io/tic-tac-toe-js
 
 Notes:
 - AI uses minimax algorithm with alpha beta pruning
