@@ -4,8 +4,22 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "gulp test",
+    "test-watch": "WATCH=true gulp test"
   },
-  "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.8.2",
+    "browserify": "^11.0.1",
+    "chai": "^1.10.0",
+    "gulp": "^3.9.0",
+    "gulp-jshint": "^1.11.2",
+    "gulp-plumber": "^1.0.1",
+    "jshint-stylish": "^2.0.1",
+    "mochify": "^2.13.0",
+    "through2": "~2.0.0",
+    "vinyl-map": "~1.0.1",
+    "vinyl-source-stream": "~1.1.0",
+    "vinyl-transform": "~1.0.0"
+  }
 }

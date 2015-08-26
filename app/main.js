@@ -1,3 +1,6 @@
+'use strict';
+var Game = require('./Game');
+
 /**
  * Tic Tac Toe
  * @description An Angular JS wrapper around the Game logic
@@ -36,7 +39,7 @@ angular.module('TicTacToe', ['ngAnimate'])
 		if(game.state.remainingMoves !== 0 && game.state.playerTurn === $scope.aiPlayer) {
 			_doAITurn();
 		}
-	}
+	};
 
 	/**
 	 * @public $scope.getEndGameText
@@ -47,7 +50,7 @@ angular.module('TicTacToe', ['ngAnimate'])
 			return 'Draw';
 		}
 		return (game.winner) ? 'X Wins!' : 'O Wins!';
-	}
+	};
 
 	/**
 	 * @public $scope.isCellInWinningLine
@@ -63,7 +66,6 @@ angular.module('TicTacToe', ['ngAnimate'])
 		var numCells = l.length / 2;
 		for(var j = 0; j < numCells; j++) {
 			var idx = (j * 2); //we are iterating over 2 coordinates at a time
-			console.log('checking against', l[idx], l[idx + 1]);
 			if(l[idx] === row && l[idx + 1] === col) {
 				return true;
 			}
