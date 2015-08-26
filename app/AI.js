@@ -21,6 +21,7 @@ module.exports = (function () {
 	 * @public AI.calculateNextBestMove
 	 * @description The entrypoint function that kicks off AI calculations
 	 *              Since we know that the center point is most optimal, take it first, if available
+	 *              If not, we begin iterating over possible moves an evaluating with minimax & alpha beta pruning
 	 * @param state - The game state to evaluate
 	 */
 	AI.prototype.calculateNextBestMove = function (state) {
@@ -29,7 +30,6 @@ module.exports = (function () {
 		if(this._takeCenterIfAvailable(state)) {
 			return; //Top priority is taking the middle, if available
 		}
-		//this._minimax(state, 0, -SCORE_BOUNDS, SCORE_BOUNDS);
 		var possibleMoves = this._getPossibleNextStates(state);
 		var alpha = -SCORE_BOUNDS;
 		var choices = [];
@@ -84,7 +84,6 @@ module.exports = (function () {
 		for(var i = 0; i < possibleMoves.length; i++) {
 			var childState = possibleMoves[i];
 			var score = this._minimax(childState, depth + 1, alpha, beta);
-			//console.log(new Array(depth + 1).join('--'), state.playerTurn, childState.lastMarker, score);
 			if (state.playerTurn === this.playerId) {
 				alpha = Math.max(alpha, score);
 				if(alpha >= beta) {
