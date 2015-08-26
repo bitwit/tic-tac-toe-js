@@ -24,15 +24,42 @@ module.exports = (function () {
 	 * @param state - The game state to evaluate
 	 */
 	AI.prototype.calculateNextBestMove = function (state) {
+		var self = this;
 		this.nextMove = null;
+		if(this._takeCenterIfAvailable(state)) {
+			return; //Top priority is taking the middle, if available
+		}
+		//this._minimax(state, 0, -SCORE_BOUNDS, SCORE_BOUNDS);
+		var possibleMoves = this._getPossibleNextStates(state);
+		var alpha = -SCORE_BOUNDS;
+		var choices = [];
+		possibleMoves.forEach(function (move) {
+			var score = self._minimax(move, 0, -SCORE_BOUNDS, SCORE_BOUNDS);
+			if (score > alpha) {
+				alpha = score;
+				choices.length = 0;
+				choices.push(move);
+			} else if (score === alpha) {
+				choices.push(move);
+			}
+		});
+		this.nextMove = choices[0];
+	};
+
+	/**
+	 * @private AI.isCenterAvailable
+	 * @description a quick check if the center cell is empty, and set it as the next move
+	 * @param state - The game state to evaluate
+	 * @returns boolean
+	 */
+	AI.prototype._takeCenterIfAvailable = function (state) {
 		var centerPoint = (GRID_SIZE - 1) / 2;
-		if(state.grid[centerPoint][centerPoint] === null) {
-			//Top priority is taking the middle, if available
+		if (state.grid[centerPoint][centerPoint] === null) {
 			this.nextMove = state.copy();
 			this.nextMove.addMarkerAtPosition(centerPoint, centerPoint);
-		} else {
-			this._minimax(state, 0, -SCORE_BOUNDS, SCORE_BOUNDS);
+			return true;
 		}
+		return false;
 	};
 
 	/**
@@ -54,30 +81,23 @@ module.exports = (function () {
 			return this._evaluateScore(state, depth);
 		}
 		var possibleMoves = this._getPossibleNextStates(state);
-		var candidateMoves = (depth === 0) ? [] : null;
 		for(var i = 0; i < possibleMoves.length; i++) {
 			var childState = possibleMoves[i];
 			var score = this._minimax(childState, depth + 1, alpha, beta);
 			//console.log(new Array(depth + 1).join('--'), state.playerTurn, childState.lastMarker, score);
 			if (state.playerTurn === this.playerId) {
-				if(depth === 0) {
-					candidateMoves.push([childState, score]);
-				}
 				alpha = Math.max(alpha, score);
+				if(alpha >= beta) {
+					return beta;
+				}
 			} else {
 				beta = Math.min(beta, score);
+				if(beta <= alpha) {
+					return alpha;
+				}
 			}
 		}
-
-		if(depth === 0) {
-			this._filterBestMove(candidateMoves);
-		}
-		var value;
-		if (state.playerTurn === this.playerId) {
-			value = alpha;
-		}
-		value = beta;
-		return value;
+		return (state.playerTurn === this.playerId) ? alpha : beta;
 	};
 
 	/**
@@ -114,33 +134,6 @@ module.exports = (function () {
 			score = 0; // it was a draw
 		}
 		return score;
-	};
-
-	/**
-	 * @private AI.filterBestMove
-	 * @description Accepts a 2d array of moves and their relative scores and selects the highest scoring option
-	 * @param moves - [ [state, score] ]
-	 */
-	AI.prototype._filterBestMove = function (moves) {
-		if(!moves.length) { //no moves to filter
-			return;
-		}
-		var highestIndex;
-		moves.reduce(function (highest, move, index) {
-			console.log('possible move', move[0].lastMarker, move[1]);
-			var score = move[1];
-			if (highest === null) {
-				highestIndex = index;
-				return score;
-			}
-			else if(score > highest) {
-				highestIndex = index;
-				return score;
-			}
-			return highest;
-		}, null);
-
-		this.nextMove = moves[highestIndex][0];
 	};
 
 	return AI;

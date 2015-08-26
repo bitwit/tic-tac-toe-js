@@ -25,6 +25,23 @@ describe('AI Tests', function () {
       expect(move.lastMarker[1]).to.equal(1);
     });
 
+    it('should select the middle', function () {
+      var state = new State();
+      var ai = new AI(1);
+      state.remainingMoves = 9;
+      state.playerTurn = 1;
+      state.grid = [
+        [null, null, null],
+        [null, null, null],
+        [null, null, null]
+      ];
+      ai.calculateNextBestMove(state);
+      var move = ai.nextMove;
+      console.log('next move', move.lastMarker);
+      expect(move.lastMarker[0]).to.equal(1);
+      expect(move.lastMarker[1]).to.equal(1);
+    });
+
     it.skip('should select the top corner and delay losing', function () {
       var state = new State();
       var ai = new AI(1);
@@ -57,23 +74,6 @@ describe('AI Tests', function () {
     console.log('next move', move.lastMarker);
     expect(move.lastMarker[0]).to.equal(1);
     expect(move.lastMarker[1]).to.equal(0);
-  });
-
-  it('should select the middle', function () {
-    var state = new State();
-    var ai = new AI(1);
-    state.remainingMoves = 9;
-    state.playerTurn = 1;
-    state.grid = [
-      [null, null, null],
-      [null, null, null],
-      [null, null, null]
-    ];
-    ai.calculateNextBestMove(state);
-    var move = ai.nextMove;
-    console.log('next move', move.lastMarker);
-    expect(move.lastMarker[0]).to.equal(1);
-    expect(move.lastMarker[1]).to.equal(1);
   });
 
 });
