@@ -48,7 +48,7 @@ module.exports = (function () {
 	};
 
 	/**
-	 * @private AI.isCenterAvailable
+	 * @private AI.takeCenterIfAvailable
 	 * @description a quick check if the center cell is empty, and set it as the next move
 	 * @param state - The game state to evaluate
 	 * @returns boolean
@@ -127,6 +127,7 @@ module.exports = (function () {
 	 * @param depth - how far down the tree of possibilities we are when evaluating
 	 */
 	AI.prototype._evaluateScore = function (state, depth) {
+		console.log('eval winner', state.winner);
 		var score;
 		if (state.winner !== null) { //there was a winner so it either positively or negatively impacts the AI player
 			score = (this.playerId === state.winner) ? SCORE_BOUNDS - depth : depth - SCORE_BOUNDS;
